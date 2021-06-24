@@ -1,5 +1,7 @@
 package leet_code;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -18,9 +20,9 @@ import java.util.stream.IntStream;
 public class LC001TwoSum {
     public static void main(String[] args) {
 
-        int[] nums = {2, 7, 11, 15};
+        int[] nums = {2, 3, 6, 11, 15};
 
-        int target = 9;
+        int target = 8;
 
        String result = IntStream.of(new LC001TwoSum().twoSum(nums, target)).mapToObj(Integer::toString).collect(Collectors.joining(", "));
 
@@ -28,14 +30,20 @@ public class LC001TwoSum {
     }
 
     public int[] twoSum(int[] nums, int target) {
-        for (int index = 0; index < nums.length - 1; index++) {
-            for (int nextIndex = index + 1; nextIndex < nums.length; nextIndex++) {
-                if (target == nums[index] + nums[nextIndex]) {
-                    return new int[]{index, nextIndex};
-                }
+        Map<Integer, Integer> hashMap = new HashMap();
+
+        for (int index = 0; index < nums.length; index++) {
+            hashMap.put(nums[index], index);
+        }
+
+        for (int index = 0; index < nums.length; index++) {
+            int difference = (target - nums[index]);
+
+            if (hashMap.containsKey(difference) && !hashMap.get(difference).equals(index)) {
+                return new int[] {index, hashMap.get(difference)};
             }
         }
 
-        return null;
+        throw new IllegalArgumentException("There is no valid solution");
     }
 }
