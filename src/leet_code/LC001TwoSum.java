@@ -19,25 +19,23 @@ public class LC001TwoSum {
     public static void main(String[] args) {
 
         int[] nums = {2, 7, 11, 15};
+
         int target = 9;
 
-        String result = IntStream.of(validate(nums, target)).mapToObj(Integer::toString).collect(Collectors.joining(", "));
+       String result = IntStream.of(new LC001TwoSum().twoSum(nums, target)).mapToObj(Integer::toString).collect(Collectors.joining(", "));
 
-        // System.out.print(result);
+        System.out.print("[" + result + "]");
     }
 
-    private static int[] validate(int[] nums, int target) {
-        int startingIndex;
-        int nextIndex = 0;
-
-        loop:
-        for (startingIndex = 0; startingIndex < nums.length - 1; startingIndex++) {
-            for (nextIndex = startingIndex + 1; nextIndex < nums.length; nextIndex++) {
-                if (nums[startingIndex] + nums[nextIndex] == 9)
-                    break loop;
+    public int[] twoSum(int[] nums, int target) {
+        for (int index = 0; index < nums.length - 1; index++) {
+            for (int nextIndex = index + 1; nextIndex < nums.length; nextIndex++) {
+                if (target == nums[index] + nums[nextIndex]) {
+                    return new int[]{index, nextIndex};
+                }
             }
         }
 
-        return new int[]{startingIndex, nextIndex};
+        return null;
     }
 }
